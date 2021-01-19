@@ -1,11 +1,11 @@
 # JRE base
-FROM openjdk:11.0-jre-slim
+FROM arm64v8/openjdk:11.0-jre-slim
 
 # Environment variables
-ENV MC_VERSION="latest" \
+ENV MC_VERSION="1.16.3" \
     PAPER_BUILD="latest" \
-    MC_RAM="1G" \
-    JAVA_OPTS=""
+    MC_RAM="6G" \
+    JAVA_OPTS="-XX:+UseG1GC -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=50 -XX:+DisableExplicitGC -XX:TargetSurvivorRatio=90 -XX:G1NewSizePercent=50 -XX:G1MaxNewSizePercent=80 -XX:InitiatingHeapOccupancyPercent=20	-XX:G1MixedGCLiveThresholdPercent=50 -XX:+AggressiveOpts"
 
 ADD papermc.sh .
 RUN apt-get update \
